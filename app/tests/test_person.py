@@ -3,7 +3,7 @@ from app.models.person import validate_cpf
 from unittest import TestCase, main
 from app.models import Person
 
-class PersonTest:
+class PersonTest(TestCase):
     person = Person()
     person.set_random()
 
@@ -13,7 +13,7 @@ class PersonTest:
         In this case, our client can't be younger than 18 years.
         """
 
-        assert self.person.birth - timedelta(days=18*365) >= 0
+        assert self.person.birth <= datetime.now()-timedelta(days=18*365)
 
     def test_cpf_validator(self):
         assert validate_cpf("302.208.800-00") == True
