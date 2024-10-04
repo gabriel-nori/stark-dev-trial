@@ -44,18 +44,6 @@ The written code must be able to achieve three different steps:
         processing: 0,15
         liquidation: 0,50
         total: 0,65
-    
-steps left:
-    Generate random CPF to create an invoice (tax_id) -> Done
-    Create Person model -> Done
-    Create invoice model -> Done
-    Create API request to create a new invoice -> Done
-    Create cron to execute the API call -> Done
-    Create endpoint to receive callbacks -> Done
-    Create unit test for:
-        Person model -> Doing
-        Invoice model
-        Invoice callback
 """
 fees: int = 65
 
