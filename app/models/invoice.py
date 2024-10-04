@@ -7,13 +7,14 @@ import random
 
 class Invoice:
     invoice_created: StarkInvoice = None
+    created: bool = False
     amount: int = 0,
     due: datetime = (datetime.now() + timedelta(days=1)).date(),
     tax_id: str = None,
     name: str = None,
-    expiration: Union[datetime, int] = 123456789,
-    fine: Decimal = 2.5,
-    interest: Decimal = 1.3,
+    expiration: Union[datetime, int] = 12345
+    fine: Decimal = 2.5
+    interest: Decimal = 1.3
     discounts: list[dict] = [
         {
             "percentage": 2,
@@ -43,7 +44,6 @@ class Invoice:
             amount = ammount,
             tax_id = payer.cpf,
             name = payer.name,
-            due=self.due,
             expiration=self.expiration,
             fine=self.fine,
             interest=self.interest,
