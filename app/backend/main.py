@@ -23,7 +23,7 @@ The written code must be able to achieve three different steps:
 steps left:
     Generate random CPF to create an invoice (tax_id) -> Done
     Create Person model -> Done
-    Create invoice model -> Started
+    Create invoice model -> Done
     Create API request to create a new invoice
     Create cron to execute the API call
     Create endpoint to receive callbacks
