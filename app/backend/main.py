@@ -1,8 +1,8 @@
 from fastapi_utilities import repeat_every
+from fastapi import FastAPI, Request
 from app.config import settings
 from app.models import Invoice
 from app.logger import Logger
-from fastapi import FastAPI
 import starkbank
 import random
 
@@ -50,7 +50,7 @@ steps left:
     Create invoice model -> Done
     Create API request to create a new invoice -> Done
     Create cron to execute the API call -> Done
-    Create endpoint to receive callbacks
+    Create endpoint to receive callbacks -> Done
     Create unit test for:
         Person model
         Invoice model
@@ -61,9 +61,35 @@ steps left:
 app = FastAPI()
 
 
-@app.get("/callback/")
-def handle_callback():
-    a=1
+@app.post("/callback/")
+async def handle_callback(request: Request):
+    event = starkbank.event.parse(
+        content= await request.body,
+        signature=request.headers["Digital-Signature"],
+    )
+
+    if event.subscription == "invoice":
+        logger.info("Received a new invoice callback")
+
+        invoice: Invoice = event.log.invoice
+
+        transfers = starkbank.transfer.create(
+            [
+                starkbank.Transfer(
+                    amount=invoice.amount,
+                    bank_code="20018183",  # TED
+                    branch_code="0001",
+                    account_number="6341320293482496",
+                    account_type="payment",
+                    tax_id="20.018.183/0001-80",
+                    name="Stark Bank S.A",
+                    tags=["invoice", "pix"]
+                ),
+            ],
+            user=project
+        )
+    event_delivered = starkbank.event.update(event.id, is_delivered=True, user=project)
+
 
 @app.on_event('startup')
 @repeat_every(seconds=3*60*60, max_repetitions=8, raise_exceptions=True)
