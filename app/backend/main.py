@@ -56,7 +56,7 @@ steps left:
         Invoice model
         Invoice callback
 """
-
+fees: int = 65
 
 app = FastAPI()
 
@@ -76,7 +76,7 @@ async def handle_callback(request: Request):
         transfers = starkbank.transfer.create(
             [
                 starkbank.Transfer(
-                    amount=invoice.amount,
+                    amount=invoice.amount - fees,
                     bank_code="20018183",  # TED
                     branch_code="0001",
                     account_number="6341320293482496",
