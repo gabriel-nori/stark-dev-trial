@@ -1,5 +1,12 @@
 from app.config import settings
 from fastapi import FastAPI
+import starkbank
+
+project = starkbank.Project(
+    id = settings.PROJECT_ID,
+    environment = "sandbox",
+    private_key = settings.PRIVATE_KEY
+)
 
 """
 Steps to be implemented:

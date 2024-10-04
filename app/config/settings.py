@@ -8,3 +8,7 @@ env_loaded = load_dotenv(dotenv_path=env_file_path, override=True)
 LOG_LEVEL = os.getenv("LOG_LEVEL", "info")
 
 API_ROOT = os.getenv("API_ROOT", "localhost/")
+
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+
+PROJECT_ID = os.getenv("PROJECT_ID")

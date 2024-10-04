@@ -1,6 +1,5 @@
 from datetime import date, datetime, timedelta
 from starkbank import Invoice as StarkInvoice
-from starkbank import invoice
 from app.models import Person
 from decimal import Decimal
 from typing import Union
@@ -59,6 +58,3 @@ class Invoice:
             random.randint(100, 10000000),
             person
         )
-    
-    def send_to_bank(self, user):
-        invoice.create([self.invoice_created], user)
