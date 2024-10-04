@@ -1,3 +1,7 @@
+fastapi==0.115.0
+fastapi_utilities==0.2.0
 pipreqs==0.5.0
+pytest==8.3.3
 python-dotenv==1.0.1
+starkbank==2.26.0
 uvicorn==0.31.0
