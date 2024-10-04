@@ -5,6 +5,7 @@ from app.models import Invoice
 from app.logger import Logger
 import starkbank
 import random
+import ssl
 
 logger = Logger("main")
 
@@ -52,17 +53,22 @@ steps left:
     Create cron to execute the API call -> Done
     Create endpoint to receive callbacks -> Done
     Create unit test for:
-        Person model
+        Person model -> Doing
         Invoice model
         Invoice callback
 """
 fees: int = 65
 
 app = FastAPI()
+if settings.SSL_CERT and settings.SSL_KEY:
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ssl_context.load_cert_chain(settings.SSL_CERT, keyfile=settings.SSL_KEY)
 
 
-@app.post("/callback/")
+@app.post("/callback")
 async def handle_callback(request: Request):
+    logger.info("Received a new callback")
+
     event = starkbank.event.parse(
         content= await request.body,
         signature=request.headers["Digital-Signature"],
@@ -77,7 +83,7 @@ async def handle_callback(request: Request):
             [
                 starkbank.Transfer(
                     amount=invoice.amount - fees,
-                    bank_code="20018183",  # TED
+                    bank_code="20018183",  # PIX
                     branch_code="0001",
                     account_number="6341320293482496",
                     account_type="payment",
@@ -119,3 +125,7 @@ async def create_invoices():
                     "exception": str(e)
                 }
             )
+
+@app.get("/health")
+async def root():
+    return {"message": "working"}

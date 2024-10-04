@@ -13,3 +13,6 @@ API_ROOT = os.getenv("API_ROOT", "localhost/")
 PRIVATE_KEY = base64.b64decode(os.getenv("PRIVATE_KEY", "").encode("ascii")).decode("ascii")
 
 PROJECT_ID = os.getenv("PROJECT_ID")
+
+SSL_CERT = base64.b64decode(os.getenv("SSL_CERT", "").encode("ascii")).decode("ascii")
+SSL_KEY = base64.b64decode(os.getenv("SSL_KEY", "").encode("ascii")).decode("ascii")
