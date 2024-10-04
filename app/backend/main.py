@@ -22,17 +22,21 @@ The written code must be able to achieve three different steps:
     
 steps left:
     Generate random CPF to create an invoice (tax_id) -> Done
+    Create Person model -> Done
+    Create invoice model -> Started
     Create API request to create a new invoice
+    Create cron to execute the API call
+    Create endpoint to receive callbacks
+    Create unit test for:
+        Person model
+        Invoice model
+        Invoice callback
 """
 
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id}
+@app.get("/callback/")
+def handle_callback():
+    a=1

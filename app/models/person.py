@@ -20,7 +20,7 @@ class Person:
     def set_random(self):
         self.name = f'{random.choice(first_names)} {random.choice(last_names)}'
         self.birth = self.__get_random_date()
-        self.cpf = self.__generate_cpf
+        self.cpf = self.__generate_cpf()
 
 
     def __get_random_date(self):
